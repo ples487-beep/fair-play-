@@ -3,7 +3,7 @@ let video;
 let hands = [];
 let imgMao, imgPunho, imgSoco;
 let gestoAnterior = ["", ""];
-let DoingSoco =false;
+let DoingSoco =[false,false];
 let time = 0;
 let GetSocosPlayer = [];
 
@@ -54,7 +54,7 @@ function draw() {
       smooth[i].y = lerp(smooth[i].y, wrist.y, 0.2);
       framesSemMao[i] = 0;
 
-      let gesto = detectarGesto(hand);
+      let gesto = detectarGesto(hand,i);
       let sprite = gesto === "SOCO"  ? imgSoco
                  : gesto === "PUNHO" ? imgPunho
                  : imgMao;
@@ -78,7 +78,7 @@ function gotHands(results) {
   hands = results;
 }
 
-function detectarGesto(hand) {
+function detectarGesto(hand,n) {
   let wrist  = hand.keypoints[0];
   let midMcp = hand.keypoints[9];
   let tamanho = dist(wrist.x, wrist.y, midMcp.x, midMcp.y);
@@ -102,19 +102,24 @@ function detectarGesto(hand) {
 
   if (ePunho && ePerto){ 
     //doingSoco para impedir o spam 
-    if(DoingSoco ==false){
-      DoingSoco = true;
+    if(DoingSoco[n] === false){
+      DoingSoco[n] = true;
       //adicionar o soco ao array para o robot imitar na ronda seguinte
+      //aaaaaa
       GetSocosPlayer.push({
         cordX: wrist.x,
         cordY: wrist.y,
         moment: time,
       });
+      print("soco" + wrist.x + wrist.y);
+      print (DoingSoco[n]);
       return "SOCO";
     }
+    return "PUNHO";
   }
-  if(ePerto == false){
-    DoingSoco = false;
+  if(!ePerto){
+    DoingSoco[n] = false;
+    print (DoingSoco[n]);
   }
   if (ePunho){           
     return "PUNHO";
@@ -123,3 +128,4 @@ function detectarGesto(hand) {
     return "ABERTA";
   }
 }
+
