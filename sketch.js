@@ -21,6 +21,7 @@ function preload() {
   imgMao   = loadImage('mao.png');
   imgPunho = loadImage('punho.png');
   imgSoco  = loadImage('soco.png');
+  fundo1 = loadImage('p4 background2.gif');
 }
 
 function setup() {
@@ -39,6 +40,7 @@ function setup() {
 
 function draw() {
   background(255);
+  image(fundo1,320,240,640,480);
   time=time+1;
   
   robot.atualizar();
