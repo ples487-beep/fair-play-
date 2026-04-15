@@ -6,6 +6,7 @@ let gestoAnterior = ["", ""];
 let DoingSoco =[false,false];
 let time = 0;
 let GetSocosPlayer = [];
+let PlayerLife =3;
 
 let robot;
 
@@ -22,6 +23,13 @@ function preload() {
   imgPunho = loadImage('punho.png');
   imgSoco  = loadImage('soco.png');
   fundo1 = loadImage('p4 background2.gif');
+  roboStanding = loadImage('idle.gif');
+  life1 = loadImage('1 life.png');
+  life2 = loadImage('2 lifes.png');
+  life3 = loadImage('3 life.png');
+  robotlife1 =loadImage("robot 1 life.png");
+  robotlife2 =loadImage("robot 2 lifes.png");
+  robotlife3 =loadImage("robot 3 lifes.png");
 }
 
 function setup() {
@@ -36,12 +44,17 @@ function setup() {
   robot = new Robot(width / 2, height / 2);
 
   handPose.detectStart(video, gotHands);
+  noSmooth();
 }
 
 function draw() {
+  tint(150);
   background(255);
+  
   image(fundo1,320,240,640,480);
+  noTint();
   time=time+1;
+  life(3,robot.life);
   
   robot.atualizar();
   robot.desenhar();
@@ -61,6 +74,10 @@ function draw() {
                  : gesto === "PUNHO" ? imgPunho
                  : imgMao;
 
+      if(gesto==="SOCO"){
+        robot.levarSoco(wrist.x,wrist.y);
+      }
+
       let ehEsquerda = hand.handedness === "Left";
 
       push();
@@ -78,6 +95,29 @@ function draw() {
 
 function gotHands(results) {
   hands = results;
+}
+
+
+function life(lifeP, lifeR){
+let lifePlayerI;
+if(lifeP===1){
+  lifePlayerI= life1;
+}else if(lifeP===2){
+  lifePlayerI= life2;
+}else{
+  lifePlayerI= life3;
+}
+image(lifePlayerI, 320, 440, 96,32);
+
+let lifeRobotI;
+if(lifeR===1){
+  lifeRobotI= robotlife1;
+}else if(lifeR===2){
+  lifeRobotI= robotlife2;
+}else{
+  lifeRobotI= robotlife3;
+}
+image(lifeRobotI, 320, 50, 96,32);
 }
 
 function detectarGesto(hand,n) {
@@ -130,4 +170,5 @@ function detectarGesto(hand,n) {
     return "ABERTA";
   }
 }
+
 
