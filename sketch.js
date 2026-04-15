@@ -18,8 +18,6 @@ let framesSemMao = [0, 0];
 
 function preload() {
   handPose = ml5.handPose({ maxHands: 2, flipped: true });
-  bodyPose.detectStart(video, gotPoses);
-  connections = bodyPose.getSkeleton();
   imgMao   = loadImage('mao.png');
   imgPunho = loadImage('punho.png');
   imgSoco  = loadImage('soco.png');
