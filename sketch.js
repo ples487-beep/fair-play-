@@ -1,4 +1,5 @@
 let handPose;
+let tela;
 let video;
 let hands = [];
 let imgMao, imgPunho, imgSoco;
@@ -7,6 +8,8 @@ let DoingSoco =[false,false];
 let time = 0;
 let GetSocosPlayer = [];
 let PlayerLife =3;
+let ronda =1;
+let gameState= "playing";
 
 let robot;
 
@@ -30,6 +33,8 @@ function preload() {
   robotlife1 =loadImage("robot 1 life.png");
   robotlife2 =loadImage("robot 2 lifes.png");
   robotlife3 =loadImage("robot 3 lifes.png");
+  telaNextRound = loadImage("pixil-frame-0 - 2026-04-15T194218.638.png");
+  telaNone = loadImage("none.png");
 }
 
 function setup() {
@@ -48,6 +53,17 @@ function setup() {
 }
 
 function draw() {
+  //game states
+  if(gameState === "Player Win"){
+    print("upingRonda");
+    robot.life=3;
+    PlayerLife=3;
+    ronda=ronda+1;
+    tela=telaNextRound;
+  }else{
+    tela=telaNone;
+  }
+
   tint(150);
   background(255);
   
@@ -56,8 +72,12 @@ function draw() {
   time=time+1;
   life(3,robot.life);
   
+  
+  
   robot.atualizar();
   robot.desenhar();
+
+  image(tela,320,240,640,480);
 
   for (let i = 0; i < 2; i++) {
     if (i < hands.length) {
@@ -86,11 +106,21 @@ function draw() {
       image(sprite, 0, 0, 64, 64);
       pop();
 
+      if(gameState === "Player Win"){
+        if(gesto === "SOCO" && dist(wrist.x,wrist.y,200,200)<200){
+          time=0;
+          gameState="playing";
+          print(gameState);
+        }
+      }
+
     } else {
       // mão desapareceu — conta frames
       framesSemMao[i]++;
     }
   }
+
+ 
 }
 
 function gotHands(results) {
@@ -98,27 +128,34 @@ function gotHands(results) {
 }
 
 
-function life(lifeP, lifeR){
-let lifePlayerI;
-if(lifeP===1){
-  lifePlayerI= life1;
-}else if(lifeP===2){
-  lifePlayerI= life2;
-}else{
-  lifePlayerI= life3;
-}
-image(lifePlayerI, 320, 440, 96,32);
+function life(lifeP,lifeR){
+  let lifePlayerI;
+  if(lifeP===1){
+    lifePlayerI= life1;
+  }else if(lifeP===2){
+    lifePlayerI= life2;
+  }else{
+    lifePlayerI= life3;
+  }
+  image(lifePlayerI, 320, 440, 96,32);
+  
+  let lifeRobotI;
+  if(lifeR===1){
+    lifeRobotI= robotlife1;
+  }else if(lifeR===2){
+    lifeRobotI= robotlife2;
+  }else{
+    lifeRobotI= robotlife3;
+  }
+  tint(255);
+  image(lifeRobotI, 320, 50, 96,32);
 
-let lifeRobotI;
-if(lifeR===1){
-  lifeRobotI= robotlife1;
-}else if(lifeR===2){
-  lifeRobotI= robotlife2;
-}else{
-  lifeRobotI= robotlife3;
+if(lifeR===0){
+  gameState="Player Win";
+  print("trys to up ronda");
 }
-image(lifeRobotI, 320, 50, 96,32);
 }
+
 
 function detectarGesto(hand,n) {
   let wrist  = hand.keypoints[0];
@@ -170,5 +207,7 @@ function detectarGesto(hand,n) {
     return "ABERTA";
   }
 }
+
+
 
 
