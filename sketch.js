@@ -35,6 +35,12 @@ function preload() {
   robotlife3 =loadImage("robot 3 lifes.png");
   telaNextRound = loadImage("pixil-frame-0 - 2026-04-15T194218.638.png");
   telaNone = loadImage("none.png");
+
+  roboWindup     = loadImage('sprites/windup.gif');
+  roboWindupLoop = loadImage('sprites/winduploop.gif');
+  roboSoco       = loadImage('sprites/soco.gif');
+  roboBlock      = loadImage('sprites/block.gif');
+  roboBlockLoop  = loadImage('sprites/blockloop.gif');
 }
 
 function setup() {
@@ -78,6 +84,8 @@ function draw() {
   robot.desenhar();
 
   image(tela,320,240,640,480);
+
+// HAND POSE E DETEÇÃO DE GESTOS
 
   for (let i = 0; i < 2; i++) {
     if (i < hands.length) {
@@ -208,6 +216,12 @@ function detectarGesto(hand,n) {
   }
 }
 
+function keyPressed() {
+  if (key === '1') robot.estado = "idle";
+  if (key === '2') robot.estado = "windup";
+  if (key === '3') robot.estado = "soco";
+  if (key === '4') robot.estado = "block";
+}
 
 
 
