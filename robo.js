@@ -7,10 +7,24 @@ class Robot {
     this.hitFlash = 0;
     this.life = 3;
     this.estado = "idle"; // idle | windup | winduploop | soco | block | blockloop
+    //socoVariaveis
+    this.robotDoingSoco=false;
+    this.lastSocoTime=0;
+    this.socoCordsX=0;
+    this.socoCordsY=0;
   }
 
   hit() {
     this.hitFlash = 10;
+  }
+
+  soco(cordx,cordy,timeStart){
+    this.estado = "windup";
+    this.lastSocoTime=timeStart+20;
+    this.socoCordsX=cordx;
+    this.socoCordsY=cordy;
+    print("start soco"+ cordx +cordy);
+    
   }
 
   desenhar() {
@@ -27,6 +41,16 @@ class Robot {
 
     image(sprite, this.x, this.y, this.width, this.height);
     noTint();
+    if(this.estado === "windup" || this.estado ==="soco"){
+      if(time>this.lastSocoTime-10){
+    image(luva,this.socoCordsX,this.socoCordsY,64,64);
+    this.estado="soco";
+      }
+    if(time>this.lastSocoTime){
+      print("stopSoco");
+      this.estado="idle";
+    }
+    }
   }
 
   atualizar() {
