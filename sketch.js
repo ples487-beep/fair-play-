@@ -8,8 +8,7 @@ let DoingSoco =[false,false];
 let time = 0;
 let GetSocosPlayer = [];
 let PlayerLife =3;
-let ronda =1;
-let gameState= "playing";
+let gameState= "PLAYINGROUND1";
 
 let robot;
 
@@ -33,14 +32,18 @@ function preload() {
   robotlife1 =loadImage("robot 1 life.png");
   robotlife2 =loadImage("robot 2 lifes.png");
   robotlife3 =loadImage("robot 3 lifes.png");
-  telaNextRound = loadImage("pixil-frame-0 - 2026-04-15T194218.638.png");
   telaNone = loadImage("none.png");
+  telaRound1 = loadImage("pixil-frame-0 - 2026-04-15T194218.638.png");
+  telaRound2 = loadImage("pixil-frame-0 - 2026-04-15T193332.002.png");
+  telaRound3 = loadImage("pixil-frame-0 - 2026-04-15T194739.779.png");
+
 
   roboWindup     = loadImage('sprites/windup.gif');
   roboWindupLoop = loadImage('sprites/winduploop.gif');
   roboSoco       = loadImage('sprites/soco.gif');
   roboBlock      = loadImage('sprites/block.gif');
   roboBlockLoop  = loadImage('sprites/blockloop.gif');
+  luva           = loadImage('luva.gif');
 }
 
 function setup() {
@@ -60,15 +63,22 @@ function setup() {
 
 function draw() {
   //game states
-  if(gameState === "Player Win"){
-    print("upingRonda");
-    robot.life=3;
-    PlayerLife=3;
-    ronda=ronda+1;
-    tela=telaNextRound;
+  if(gameState==="ROUND1WON" || gameState === "ROUND2WON"){
+    tela="pixil-frame-0 - 2026-04-20T140222.346.png";
+  }
+
+  if(time<20){
+    if(gameState==="PLAYINGROUND1"){
+      tela=telaRound1;
+    }else if(gameState==="PLAYINGROUND2"){
+      tela=telaRound2;
+    }else{
+      tela=telaRound3;
+    }
   }else{
     tela=telaNone;
   }
+
 
   tint(150);
   background(255);
@@ -78,6 +88,17 @@ function draw() {
   time=time+1;
   life(3,robot.life);
   
+
+  //robot ataques round2
+  if(gameState==="PLAYINGROUND2"){
+    for(let i=0; i<GetSocosPlayer.length; i++){
+      if(GetSocosPlayer[i].moment === time){
+        print(i + 'x:'+ GetSocosPlayer[i].cordX + 'y:' +GetSocosPlayer[i].cordY);
+        robot.soco(GetSocosPlayer[i].cordX,GetSocosPlayer[i].cordY);
+      }
+    }
+  }
+
   
   
   robot.atualizar();
@@ -114,10 +135,19 @@ function draw() {
       image(sprite, 0, 0, 64, 64);
       pop();
 
-      if(gameState === "Player Win"){
-        if(gesto === "SOCO" && dist(wrist.x,wrist.y,200,200)<200){
+      if(gameState === "ROUND1WON"){
+        if(gesto === "PUNHO" && dist(wrist.x,wrist.y,320,300)<200){
           time=0;
-          gameState="playing";
+          robot.life=3;
+          gameState="PLAYINGROUND2";
+          print(gameState);
+          print(time);
+        }
+      }else if(gameState === "ROUND2WON"){
+        if(gesto === "PUNHO" && dist(wrist.x,wrist.y,320,300)<200){
+          time=0;
+          robot.life=3;
+          gameState="PLAYINGROUND3";
           print(gameState);
         }
       }
@@ -159,8 +189,20 @@ function life(lifeP,lifeR){
   image(lifeRobotI, 320, 50, 96,32);
 
 if(lifeR===0){
-  gameState="Player Win";
-  print("trys to up ronda");
+  if(gameState==="PLAYINGROUND1"){
+    gameState="ROUND1WON";
+  }else if(gameState==="PLAYINGROUND2"){
+    gameState="ROUND2WON";
+  }else if(gameState==="PLAYINGROUND3"){
+    gameState="ROUND3WON";
+  }
+}
+if(lifeP ===0){
+  if(gameState==="PLAYINGROUND2"){
+    gameState="ROUND2LOSE";
+  }else if(gameState==="PLAYINGROUND3"){
+    gameState="ROUND3LOSE";
+  }
 }
 }
 
@@ -199,6 +241,7 @@ function detectarGesto(hand,n) {
         moment: time,
       });
       print("soco" + wrist.x + wrist.y);
+      print("socos dados:"+ GetSocosPlayer.length)
       print (DoingSoco[n]);
       return "SOCO";
     }
@@ -221,7 +264,11 @@ function keyPressed() {
   if (key === '2') robot.estado = "windup";
   if (key === '3') robot.estado = "soco";
   if (key === '4') robot.estado = "block";
+  if(key ==='5') robot.soco(50,50,time+10)
 }
+
+
+
 
 
 
