@@ -8,7 +8,7 @@ let DoingSoco =[false,false];
 let time = 0;
 let GetSocosPlayer = [];
 let PlayerLife =3;
-let gameState= "PLAYINGROUND1";
+let gameState= "MENU";
 
 let robot;
 
@@ -36,6 +36,7 @@ function preload() {
   telaRound1 = loadImage("pixil-frame-0 - 2026-04-15T194218.638.png");
   telaRound2 = loadImage("pixil-frame-0 - 2026-04-15T193332.002.png");
   telaRound3 = loadImage("pixil-frame-0 - 2026-04-15T194739.779.png");
+  telaMenu = loadImage("titlescreen.gif");
 
 
   roboWindup     = loadImage('sprites/windup.gif');
@@ -63,6 +64,10 @@ function setup() {
 
 function draw() {
   //game states
+   if (gameState === "MENU") {
+  image(telaMenu, 320, 240, 640, 480);
+  return;
+}
   if(gameState==="ROUND1WON" || gameState === "ROUND2WON"){
     tela="pixil-frame-0 - 2026-04-20T140222.346.png";
   }
@@ -282,6 +287,13 @@ function keyPressed() {
   if (key === '3') robot.estado = "soco";
   if (key === '4') robot.estado = "block";
   if(key ==='5') robot.soco(100,100,time+10,30)
+}
+
+function mousePressed() {
+  if (gameState === "MENU") {
+    time = 0;
+    gameState = "PLAYINGROUND1";
+  }
 }
 
 
