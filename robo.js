@@ -12,18 +12,20 @@ class Robot {
     this.lastSocoTime=0;
     this.socoCordsX=0;
     this.socoCordsY=0;
+    this.bloqueado=false;
   }
 
   hit() {
     this.hitFlash = 10;
   }
 
-  soco(cordx,cordy,timeStart){
-    this.estado = "windup";
-    this.lastSocoTime=timeStart+20;
+  soco(cordx,cordy,timeStart,preTime){
+    this.estado = "winduploop";
+    this.lastSocoTime=timeStart+preTime;
     this.socoCordsX=cordx;
     this.socoCordsY=cordy;
-    print("start soco"+ cordx +cordy);
+    this.bloqueado=false;
+    print("start soco"+ cordx +cordy + "moment:"+this.lastSocoTime);
     
   }
 
@@ -41,14 +43,19 @@ class Robot {
 
     image(sprite, this.x, this.y, this.width, this.height);
     noTint();
-    if(this.estado === "windup" || this.estado ==="soco"){
-      if(time>this.lastSocoTime-10){
+    if(this.estado === "windup" || this.estado ==="soco" || this.estado === "winduploop"){
+      if(time>this.lastSocoTime-15){
     image(luva,this.socoCordsX,this.socoCordsY,64,64);
+    //print(this.estado + this.socoCordsX + this.socoCordsY)
     this.estado="soco";
       }
-    if(time>this.lastSocoTime){
+    if(time>this.lastSocoTime && this.estado ==="soco" && this.bloqueado===false){
       print("stopSoco");
       this.estado="idle";
+      print(this.estado);
+      PlayerLife=PlayerLife-1;
+      print("PlayerLife-1");
+      print(PlayerLife);
     }
     }
   }
@@ -58,7 +65,7 @@ class Robot {
   }
 
   levarSoco(Cordx, Cordy) {
-    if (dist(Cordx, Cordy, this.x, this.y) < 100) {
+    if (dist(Cordx, Cordy, this.x, this.y) < 100 && this.estado != "blockloop") {
       this.life = this.life - 1;
       this.hit();
       print("dano");
