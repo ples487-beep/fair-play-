@@ -86,7 +86,7 @@ function draw() {
   image(fundo1,320,240,640,480);
   noTint();
   time=time+1;
-  life(3,robot.life);
+  life(PlayerLife,robot.life);
   
 
   //robot ataques round2
@@ -94,8 +94,11 @@ function draw() {
     for(let i=0; i<GetSocosPlayer.length; i++){
       if(GetSocosPlayer[i].moment === time){
         print(i + 'x:'+ GetSocosPlayer[i].cordX + 'y:' +GetSocosPlayer[i].cordY);
-        robot.soco(GetSocosPlayer[i].cordX,GetSocosPlayer[i].cordY);
+        robot.soco(GetSocosPlayer[i].cordX,GetSocosPlayer[i].cordY,GetSocosPlayer[i].moment,30);
       }
+    }
+  }else if(gameState==="PLAYINGROUND3"){
+    if(robot.estado==="blockloop"){
     }
   }
 
@@ -135,6 +138,15 @@ function draw() {
       image(sprite, 0, 0, 64, 64);
       pop();
 
+
+      if(robot.lastSocoTime>time-5 && robot.lastSocoTime<time+5){
+        if(dist(wrist.x,wrist.y,robot.socoCordsX,robot.socoCordsY) && gesto === "ABERTA"){
+          robot.estado="idle";
+          robot.bloqueado=true;
+          print("socodefendido");
+        }
+      }
+
       if(gameState === "ROUND1WON"){
         if(gesto === "PUNHO" && dist(wrist.x,wrist.y,320,300)<200){
           time=0;
@@ -149,6 +161,15 @@ function draw() {
           robot.life=3;
           gameState="PLAYINGROUND3";
           print(gameState);
+        }
+      }else if(gameState === "ROUNDLOSE"){
+        if(gesto === "PUNHO" && dist(wrist.x,wrist.y,320,300)<200){
+        time=0;
+          robot.life=3;
+          PlayerLife=3;
+          gameState="PLAYINGROUND1";
+          print(gameState);
+          print(time);
         }
       }
 
@@ -198,11 +219,7 @@ if(lifeR===0){
   }
 }
 if(lifeP ===0){
-  if(gameState==="PLAYINGROUND2"){
-    gameState="ROUND2LOSE";
-  }else if(gameState==="PLAYINGROUND3"){
-    gameState="ROUND3LOSE";
-  }
+    gameState="ROUNDLOSE";
 }
 }
 
@@ -264,9 +281,8 @@ function keyPressed() {
   if (key === '2') robot.estado = "windup";
   if (key === '3') robot.estado = "soco";
   if (key === '4') robot.estado = "block";
-  if(key ==='5') robot.soco(50,50,time+10)
+  if(key ==='5') robot.soco(100,100,time+10,30)
 }
-
 
 
 
