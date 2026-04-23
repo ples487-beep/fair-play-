@@ -103,7 +103,29 @@ function draw() {
       }
     }
   }else if(gameState==="PLAYINGROUND3"){
-    if(robot.estado==="blockloop"){
+    if(robot.estado==="idle"){
+      let rd= random(10);
+      if(rd>5){
+        let cordXRd=random(100,600);
+        let cordYRd=random(80,400);
+        let ReactTimeRd= random(20,40);
+        robot.soco(cordXRd,cordYRd,time,ReactTimeRd);
+      }else if(rd<4){
+        robot.estado="blockloop";
+      }
+    }
+    if(DoingSoco[0]=== true || DoingSoco[1]===true){
+      let rd= random(10);
+      if(rd>7 && robot.estado==="idle"){
+        robot.estado="blockloop";
+      }
+    }else{
+      if(robot.estado==="blockloop"){
+        let rd= random(10);
+        if(rd>6){
+          robot.estado="idle";
+        }
+      }
     }
   }
 
