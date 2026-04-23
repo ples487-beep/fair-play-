@@ -65,7 +65,7 @@ class Robot {
   }
 
   levarSoco(Cordx, Cordy) {
-    if (dist(Cordx, Cordy, this.x, this.y) < 100 && this.estado != "blockloop") {
+    if (dist(Cordx, Cordy, this.x, this.y) < 150 && this.estado != "blockloop") {
       this.life = this.life - 1;
       this.hit();
       print("dano");
