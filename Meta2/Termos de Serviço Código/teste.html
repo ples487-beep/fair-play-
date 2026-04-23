@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <title>Instalação de Driver de Combate v.1.0.4</title>
+    <link rel="stylesheet" href="teste.css">
+</head>
+<body>
+
+<div class="window">
+    <div class="title-bar">
+        <div class="title-bar-text">Assistente de Instalação - Dispositivo Neural v.1.0.4</div>
+        <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+        </div>
+    </div>
+
+    <div class="window-body">
+        <h3 class="section-title">Manual de Instruções do Utilizador:</h3>
+        <div class="how-to-play">
+            <ul>
+                <li><strong>Objetivo:</strong> Derrotar o adversário mecânico em combate de curta distância.</li>
+                <li><strong>Vidas:</strong> O jogador e o robô iniciam com <strong>3 vidas</strong> cada.</li>
+                <li><strong>Mecânica:</strong> Desferir golpes reais perante a webcam. O sensor traduz o movimento em dano.</li>
+                <li><strong>Condição de Vitória:</strong> Reduzir a integridade do robô a zero antes de perder as suas 3 vidas.</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h3 class="section-title">Termos de Licença e Acordo de Utilizador Final (EULA):</h3>
+        <div class="terms-container">
+            <p><strong>1. ACEITAÇÃO DOS TERMOS:</strong> Ao prosseguir com a instalação deste software, o utilizador declara estar em pleno gozo das suas faculdades mentais e aceita, sem reservas, todas as disposições aqui enumeradas, incluindo as atualizações automáticas de firmware e protocolos de conectividade remota via pacotes de dados encriptados.</p>
+
+            <p><strong>2. POLÍTICA DE COOKIES E TELEMETRIA:</strong> Este software utiliza identificadores únicos para monitorizar a performance do hardware. Recolhemos dados sobre a latência do processador, ciclos de refrescamento do monitor e interações periféricas para otimizar a experiência do ecossistema digital global de entretenimento interativo.</p>
+
+            <p><strong>3. RESPONSABILIDADE CIVIL:</strong> A entidade desenvolvedora não se responsabiliza por quaisquer danos patrimoniais ou não patrimoniais decorrentes da utilização indevida da webcam ou de movimentos bruscos efetuados no espaço físico do utilizador durante as sessões de interação percussiva.</p>
+
+            <p style="color: #444;"><strong>4. PROTOCOLO DE APRENDIZAGEM PROFUNDA (CLÁUSULA CRÍTICA):</strong> O utilizador concede permissão explícita para que o robô físico interligado analise, grave e armazene cada vetor de movimento desferido. Esta simulação é um ambiente de treino real. O robô irá converter os seus ataques em algoritmos de defesa, aprendendo com cada falha para atingir um estado de invencibilidade absoluta. O utilizador aceita ser o fornecedor biológico de padrões de combate para a evolução da inteligência artificial.</p>
+
+            <p><strong>5. PROPRIEDADE INTELECTUAL:</strong> Todos os logótipos, algoritmos de compressão de áudio e texturas de pixel art são propriedade exclusiva da corporação, não sendo permitida a engenharia reversa ou a distribuição de cópias não autorizadas em servidores de terceiros sob pena de sanções legais civis.</p>
+
+            <p><strong>6. JURISDIÇÃO E LEGISLAÇÃO APLICÁVEL:</strong> Qualquer litígio emergente da interpretação deste contrato será submetido aos tribunais da comarca da sede da empresa, renunciando as partes a qualquer outro foro por mais privilegiado que este se apresente no ordenamento jurídico vigente.</p>
+
+            <p><strong>7. CLÁUSULAS ADICIONAIS DE SEGURANÇA:</strong> O sistema reserva-se o direito de suspender a conta do utilizador caso detete padrões de comportamento não conformes com os standards de desportivismo definidos pela comissão internacional de jogos neurais e robóticos.</p>
+        </div>
+
+        <div class="action-bar">
+            <label class="check-container">
+                <input type="checkbox" id="aceito"> Aceito os termos de licenciamento e a política de treino neural.
+            </label>
+            <div class="buttons">
+                <button class="retro-btn primary" id="btn-ok" disabled onclick="iniciar()">OK</button>
+                <button class="retro-btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const check = document.getElementById('aceito');
+    const btn = document.getElementById('btn-ok');
+
+    check.addEventListener('change', function() {
+        btn.disabled = !this.checked;
+    });
+
+    function iniciar() {
+        alert("Instalação concluída. Drivers de combate carregados. O robô está à tua espera.");
+        // Aqui redirecionas para o teu jogo real no Git
+    }
+</script>
+
+</body>
+</html>
