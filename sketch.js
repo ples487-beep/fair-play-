@@ -9,6 +9,7 @@ let time = 0;
 let GetSocosPlayer = [];
 let PlayerLife =3;
 let gameState= "MENU";
+let cutscene;
 
 let robot;
 
@@ -45,6 +46,8 @@ function preload() {
   roboBlock      = loadImage('sprites/block.gif');
   roboBlockLoop  = loadImage('sprites/blockloop.gif');
   luva           = loadImage('luva.gif');
+  cutscene = createVideo('credits.mp4');
+cutscene.hide();
 }
 
 function setup() {
@@ -68,10 +71,19 @@ function draw() {
   image(telaMenu, 320, 240, 640, 480);
   return;
 }
+  if (gameState === "ROUND3WON") {
+    background(0);
+    cutscene.play();
+    image(cutscene, 320, 240, 640, 480);
+    if (cutscene.time() >= cutscene.duration() - 0.1 ) {
+      window.location.href = 'Meta2/tos/teste.html';
+    }
+    return;
+  }
   if(gameState==="ROUND1WON" || gameState === "ROUND2WON"){
     tela="pixil-frame-0 - 2026-04-20T140222.346.png";
   }
-
+  
   if(time<20){
     if(gameState==="PLAYINGROUND1"){
       tela=telaRound1;
@@ -83,6 +95,7 @@ function draw() {
   }else{
     tela=telaNone;
   }
+
 
 
   tint(150);
@@ -198,6 +211,8 @@ function draw() {
           print(gameState);
           print(time);
         }
+      
+  return;
       }
 
     } else {
