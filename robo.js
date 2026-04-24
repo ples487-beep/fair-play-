@@ -56,7 +56,7 @@ class Robot {
       PlayerLife=PlayerLife-1;
       print("PlayerLife-1");
       print(PlayerLife);
-      roboPunch.play();
+      if (roboPunch) roboPunch.play();
     }
     }
   }
@@ -66,11 +66,11 @@ class Robot {
   }
 
   levarSoco(Cordx, Cordy) {
-    if (dist(Cordx, Cordy, this.x, this.y) < 150 && this.estado != "blockloop") {
-      this.life = this.life - 1;
-      this.hit();
-      print("dano");
-      roboPunch.play();
-    }
+  if (dist(Cordx, Cordy, this.x, this.y) < 150 && this.estado != "blockloop") {
+    this.life = this.life - 1;
+    this.hit();
+    print("dano");
+    if (humanPunch) humanPunch.play();
   }
+}
 }

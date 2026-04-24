@@ -26,22 +26,22 @@ let framesSemMao = [0, 0];
 
 function preload() {
   handPose = ml5.handPose({ maxHands: 2, flipped: true });
-  imgMao   = loadImage('mao.png');
-  imgPunho = loadImage('punho.png');
-  imgSoco  = loadImage('soco.png');
-  fundo1 = loadImage('p4 background2.gif');
-  roboStanding = loadImage('idle.gif');
-  life1 = loadImage('1 life.png');
-  life2 = loadImage('2 lifes.png');
-  life3 = loadImage('3 life.png');
-  robotlife1 =loadImage("robot 1 life.png");
-  robotlife2 =loadImage("robot 2 lifes.png");
-  robotlife3 =loadImage("robot 3 lifes.png");
-  telaNone = loadImage("none.png");
-  telaRound1 = loadImage("pixil-frame-0 - 2026-04-15T194218.638.png");
-  telaRound2 = loadImage("pixil-frame-0 - 2026-04-15T193332.002.png");
-  telaRound3 = loadImage("pixil-frame-0 - 2026-04-15T194739.779.png");
-  telaMenu = loadImage("titlescreen.gif");
+  imgMao   = loadImage('assets/mao.png');
+  imgPunho = loadImage('assets/punho.png');
+  imgSoco  = loadImage('assets/soco.png');
+  fundo1 = loadImage('assets/p4 background2.gif');
+  roboStanding = loadImage('assets/idle.gif');
+  life1 = loadImage('assets/1 life.png');
+  life2 = loadImage('assets/2 lifes.png');
+  life3 = loadImage('assets/3 life.png');
+  robotlife1 =loadImage("assets/robot 1 life.png");
+  robotlife2 =loadImage("assets/robot 2 lifes.png");
+  robotlife3 =loadImage("assets/robot 3 lifes.png");
+  telaNone = loadImage("assets/none.png");
+  telaRound1 = loadImage("assets/pixil-frame-0 - 2026-04-15T194218.638.png");
+  telaRound2 = loadImage("assets/pixil-frame-0 - 2026-04-15T193332.002.png");
+  telaRound3 = loadImage("assets/pixil-frame-0 - 2026-04-15T194739.779.png");
+  telaMenu = loadImage("assets/titlescreen.gif");
 
 
   roboWindup     = loadImage('sprites/windup.gif');
@@ -49,14 +49,15 @@ function preload() {
   roboSoco       = loadImage('sprites/soco.gif');
   roboBlock      = loadImage('sprites/block.gif');
   roboBlockLoop  = loadImage('sprites/blockloop.gif');
-  luva           = loadImage('luva.gif');
+  luva           = loadImage('assets/luva.gif');
 
   //sons
-  humanPunch = loadSound('Meta2/Murro Humano.wav');
-  roboPunch = loadSound('Meta2/Murro Robo.wav');
+  humanPunch = loadSound('Meta2/Murro Robo.wav');
+  roboPunch = loadSound('Meta2/Murro Humano.wav');
+
 
   //cut scena
-  cutscene = createVideo('credits.mp4');
+  
 cutscene.hide();
 }
 
@@ -73,6 +74,9 @@ function setup() {
 
   handPose.detectStart(video, gotHands);
   noSmooth();
+    cutscene = createVideo('assets/credits.mp4');
+    cutscene.hide();
+  
 }
 
 function draw() {
@@ -314,8 +318,6 @@ function detectarGesto(hand,n) {
       print (DoingSoco[n]);
       if(humanPunch){
       humanPunch.play();
-      }else{
-        humanPunch= loadSound('Meta2/Murro Humano.wav');
       }
       return "SOCO";
     }
