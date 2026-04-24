@@ -13,6 +13,10 @@ let cutscene;
 
 let robot;
 
+//sounds
+let humanPunch;
+let roboPunch;
+
 // suavização — uma por mão
 let smooth = [
   { x: 0, y: 0 },
@@ -46,6 +50,12 @@ function preload() {
   roboBlock      = loadImage('sprites/block.gif');
   roboBlockLoop  = loadImage('sprites/blockloop.gif');
   luva           = loadImage('luva.gif');
+
+  //sons
+  humanPunch = loadSound('Meta2/Murro Humano.wav');
+  roboPunch = loadSound('Meta2/Murro Robo.wav');
+
+  //cut scena
   cutscene = createVideo('credits.mp4');
 cutscene.hide();
 }
@@ -302,6 +312,11 @@ function detectarGesto(hand,n) {
       print("soco" + wrist.x + wrist.y);
       print("socos dados:"+ GetSocosPlayer.length)
       print (DoingSoco[n]);
+      if(humanPunch){
+      humanPunch.play();
+      }else{
+        humanPunch= loadSound('Meta2/Murro Humano.wav');
+      }
       return "SOCO";
     }
     return "PUNHO";
@@ -332,6 +347,12 @@ function mousePressed() {
     gameState = "PLAYINGROUND1";
   }
 }
+
+
+
+
+
+
 
 
 
