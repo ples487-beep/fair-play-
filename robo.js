@@ -56,6 +56,7 @@ class Robot {
       PlayerLife=PlayerLife-1;
       print("PlayerLife-1");
       print(PlayerLife);
+      roboPunch.play();
     }
     }
   }
@@ -69,6 +70,7 @@ class Robot {
       this.life = this.life - 1;
       this.hit();
       print("dano");
+      roboPunch.play();
     }
   }
 }
